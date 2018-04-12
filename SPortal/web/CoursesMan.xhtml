@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="/resources/usersTemp.xhtml">
+            <ui:define name="content">
+                <h:form id="inst-form" style=" position: absolute;
+                        width: 70%;
+                        height: 200px;
+                        z-index: 15;
+                        top: 30%;
+                        left: 30%;
+                        margin: -100px 0 0 -150px;
+                        ">
+
+                    <p:breadCrumb>
+                        <p:menuitem value="Menu" url="#" />
+                        <p:menuitem value="Courses" url="#" style="color: #5FCF80;font-size: 12px"/>
+                    </p:breadCrumb>
+
+                    <p:messages autoUpdate="true" style="width: 508px;"/>
+
+                    <p:panelGrid columns="4" style="margin-top: 25px;margin-left: 3px;">
+                        <p:outputLabel value="Course Code"/>
+                        <h:inputText value="#{courseBN.course.courseCode}" />
+
+                        <p:outputLabel value="Full Name"/>
+                        <h:inputText value="#{courseBN.course.fullName}" />
+
+                        <p:outputLabel value="Short Name"/>
+                        <h:inputText value="#{courseBN.course.shortName}" />
+
+                        <p:outputLabel value="Semester"/>
+                        <h:selectOneMenu value="#{courseBN.course.semesterId}" converter="#{courseBN.semConv}">
+                            <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                            <f:selectItems value="#{courseBN.semList}"
+                                           var="sem" itemLabel="#{sem.semesterValue}"
+                                           itemValue="#{sem}"/>
+                        </h:selectOneMenu>
+
+                        <p:commandButton value="Search" action="#{courseBN.searchCourse()}" class="primeButton" update="couTable"/>
+                    </p:panelGrid>
+
+                    <br/>
+
+                    <p:dataTable value="#{courseBN.coursesList}" var="par" paginator="true" 
+                                 widgetVar="couTable" rows="10"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 rowsPerPageTemplate="5,10,15" id="couTable"> 
+
+                        <p:column headerText="Course Code" sortBy="#{par.courseCode}">
+                            <h:outputText value="#{par.courseCode}"/>
+                        </p:column>
+                        <p:column headerText="Course Full Name" sortBy="#{par.fullName}">
+                            <h:outputText value="#{par.fullName}"/>
+                        </p:column>
+                        <p:column headerText="Course Short Name" sortBy="#{par.shortName}">
+                            <h:outputText value="#{par.shortName}"/>
+                        </p:column>
+                        <p:column headerText="Credit Hours" sortBy="#{par.creditHours}">
+                            <h:outputText value="#{par.creditHours}"/>
+                        </p:column>
+                        <p:column headerText="Description" sortBy="#{par.description}">
+                            <h:outputText value="#{par.description}"/>
+                        </p:column>
+                        <p:column headerText="Semester" sortBy="#{par.semesterId.semesterValue}">
+                            <h:outputText value="#{par.semesterId.semesterValue}"/>
+                        </p:column>
+                        <p:column rendered="#{courseBN.rulePriv.canUpdate == 'Y'}">
+                            <a href="AddCourse.xhtml?faces-redirect=true&amp;id=#{par.id}">Edit</a>
+                        </p:column>
+                        <p:column rendered="#{courseBN.rulePriv.canDelete == 'Y'}">
+                            <h:commandLink value="Delete" action="#{courseBN.deleteCourse(par)}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandLink value="Add New Course" action="AddCourse.xhtml?faces-redirect=true"  class="creatButt" update=":inst-form" style="color: #5FCF80;font-size: 16px" rendered="#{courseBN.rulePriv.canCreate == 'Y'}"/>
+                        </f:facet>
+                    </p:dataTable>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

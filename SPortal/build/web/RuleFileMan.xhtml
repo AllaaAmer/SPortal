@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="/resources/usersTemp.xhtml">
+            <ui:define name="content">
+                <h:form id="inst-form" style=" position: absolute;
+                        width: 70%;
+                        height: 200px;
+                        z-index: 15;
+                        top: 30%;
+                        left: 30%;
+                        margin: -100px 0 0 -150px;
+                        ">
+
+                    <p:breadCrumb>
+                        <p:menuitem value="Menu" url="#" />
+                        <p:menuitem value="Rules From File" url="#" style="color: #5FCF80;font-size: 12px"/>
+                    </p:breadCrumb>
+
+                    <br/>
+
+                    <p:messages autoUpdate="true" style="width: 508px;"/>
+
+                    <table id="rules-table">
+                        <tr>
+                            <th>Criteria</th>
+                            <th>Time Spent</th>
+                            <th>Learning Object Type</th>
+                        </tr>
+                        <tbody>
+                            <ui:repeat var="o" value="#{owlRuleBN.rulesList}" varStatus="status">
+                                <tr>
+                                    <td>#{o.criteriaId.criteria}</td>
+                                    <td>
+                                        <div style="width: 228px;float: right">
+                                            <p:inputText value="#{o.value}"/>
+                                        </div>
+                                    </td>
+                                    <td>#{o.learningObjectTypeId.learningObjectType}</td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+
+                    <p:commandButton value="Save Rules" action="#{owlRuleBN.saveRules()}"/>
+
+                    <style>
+                        #rules-table {
+                            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+
+                        #rules-table td, #rules-table th {
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                        }
+
+                        #rules-table tr:nth-child(even){background-color: #f2f2f2;}
+
+                        #rules-table tr:hover {background-color: #ddd;}
+
+                        #rules-table th {
+                            padding-top: 12px;
+                            padding-bottom: 12px;
+                            text-align: left;
+                            background-color: #4CAF50;
+                            color: white;
+                        }
+                    </style>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="/resources/usersTemp.xhtml">
+            <ui:define name="content">
+                <h:form id="inst-form" style=" position: absolute;
+                        width: 70%;
+                        height: 200px;
+                        z-index: 15;
+                        top: 30%;
+                        left: 30%;
+                        margin: -100px 0 0 -150px;
+                        ">
+
+                    <p:breadCrumb>
+                        <p:menuitem value="Menu" url="#" />
+                        <p:menuitem value="Learning Objects" url="#" style="color: #5FCF80;font-size: 12px"/>
+                    </p:breadCrumb>
+
+                    <p:messages autoUpdate="true" style="width: 508px;"/>
+
+                    <p:panelGrid columns="4" style="margin-top: 25px;margin-left: 3px;">
+                        <p:outputLabel value="File Desc"/>
+                        <h:inputText value="#{learnObjBN.learnObj.fileDesc}" />
+
+
+
+                        <p:commandButton value="Search" action="#{learnObjBN.searchLearnObj()}" class="primeButton" update="insTable"/>
+                    </p:panelGrid>
+
+                    <br/>
+
+                    <p:dataTable value="#{learnObjBN.learnObjList}" var="par" paginator="true" 
+                                 widgetVar="instTable" rows="10"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 rowsPerPageTemplate="5,10,15" id="insTable"> 
+
+                        <p:column headerText="File Desc" sortBy="#{par.fileDesc}">
+                            <h:outputText value="#{par.fileDesc}"/>
+                        </p:column>
+                        <p:column headerText="Learning Object Type" sortBy="#{par.learningObjTyId.learningObjectType}">
+                            <h:outputText value="#{par.learningObjTyId.learningObjectType}"/>
+                        </p:column>
+                        <p:column headerText="File Name" sortBy="#{par.fileName}">
+                            <h:outputText value="#{par.fileName}"/>
+                        </p:column>
+                        <p:column rendered="#{learnObjBN.rulePriv.canDelete == 'Y'}">
+                            <h:commandLink value="Delete" action="#{learnObjBN.deleteLearnObj(par)}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandLink value="Add New Learn Object" action="AddLearnObj.xhtml?faces-redirect=true"  class="creatButt" update=":inst-form" style="color: #5FCF80;font-size: 16px" rendered="#{learnObjBN.rulePriv.canCreate == 'Y'}"/>
+                        </f:facet>
+                    </p:dataTable>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

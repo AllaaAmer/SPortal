@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="/resources/usersTemp.xhtml">
+            <ui:define name="content">
+                <h:form id="inst-form" style=" position: absolute;
+                        width: 70%;
+                        height: 200px;
+                        z-index: 15;
+                        top: 30%;
+                        left: 30%;
+                        margin: -100px 0 0 -150px;
+                        ">
+
+                    <p:breadCrumb>
+                        <p:menuitem value="Menu" url="#" />
+                        <p:menuitem value="Lessons" url="#" style="color: #5FCF80;font-size: 12px"/>
+                        <p:menuitem value="Proccess Lesson" url="#" style="color: #5FCF80;font-size: 12px"/>
+                    </p:breadCrumb>
+
+                    <p:messages autoUpdate="true" style="width: 508px;"/>
+
+                    <p:panelGrid columns="2" style="margin-top: 25px;margin-left: 3px;">
+                        <p:outputLabel value="Lesson Name"/>
+                        <p:inputText value="#{lessonBN.lesson.lessonName}"/>
+
+                        <p:outputLabel value="Lesson Sequence"/>
+                        <p:inputText value="#{lessonBN.lesson.sequence}"/>
+
+                        <p:outputLabel value="Course"/>
+                        <h:selectOneMenu value="#{lessonBN.selectedCourse}" converter="#{lessonBN.corCov}">
+                            <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                            <f:selectItems value="#{lessonBN.courseList}"
+                                           var="c" itemLabel="#{c.courseCode}/#{c.fullName}"
+                                           itemValue="#{c}"/>
+                            <p:ajax listener="#{lessonBN.fillTopics()}" update="topi-menu"/>
+                        </h:selectOneMenu>
+
+                        <p:outputLabel value="Topic"/>
+                        <h:selectOneMenu value="#{lessonBN.lesson.topicId}" converter="#{lessonBN.toConv}" id="topi-menu">
+                            <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                            <f:selectItems value="#{lessonBN.topicList}"
+                                           var="c" itemLabel="#{c.topicName}"
+                                           itemValue="#{c}"/>
+                        </h:selectOneMenu>
+
+                        <p:outputLabel value="Folder Name"/>
+                        <h:panelGroup>
+                            <p:inputText value="#{lessonBN.folderName}"/>
+                            <p:commandButton value="Add" update="result" action="#{lessonBN.addDir()}"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="result">
+                            <h:dataTable value="#{lessonBN.lessonDirList}" var="obj">
+                                <h:column>
+                                    <f:facet name="header">Folder Name</f:facet>
+                                    <h:outputText value="#{obj.folderName}"/>
+                                </h:column>
+                                <h:column>
+                                    <h:commandButton value="remove" action="#{lessonBN.removeDir(obj)}"/>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGroup>
+                        <h:outputText value=""/>
+
+                        <p:commandButton value="Save" action="#{lessonBN.processLesson()}" class="primeButton" update=":inst-form"/>
+                    </p:panelGrid>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

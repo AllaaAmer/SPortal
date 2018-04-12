@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="/resources/usersTemp.xhtml">
+            <ui:define name="content">
+                <h:form id="inst-form" style=" position: absolute;
+                        width: 70%;
+                        height: 200px;
+                        z-index: 15;
+                        top: 30%;
+                        left: 30%;
+                        margin: -100px 0 0 -150px;
+                        ">
+
+                    <p:breadCrumb>
+                        <p:menuitem value="Menu" url="#" />
+                        <p:menuitem value="Course" url="#" style="color: #5FCF80;font-size: 12px"/>
+                        <p:menuitem value="Proccess Course" url="#" style="color: #5FCF80;font-size: 12px"/>
+                    </p:breadCrumb>
+                    <center>
+                        <p:messages autoUpdate="true" style="width: 508px;"/>
+
+                        <p:panelGrid columns="2" style="margin-top: 25px;margin-left: 3px;">
+                            <p:outputLabel value="Course Code"/>
+                            <p:inputText value="#{courseBN.course.courseCode}"/>
+
+                            <p:outputLabel value="Course Full Name"/>
+                            <p:inputText value="#{courseBN.course.fullName}"/>
+
+                            <p:outputLabel value="Course Short Name"/>
+                            <p:inputText value="#{courseBN.course.shortName}"/>
+
+                            <p:outputLabel value="Credit Hours"/>
+                            <p:inputText value="#{courseBN.course.creditHours}"/>
+
+                            <p:outputLabel value="Description"/>
+                            <p:inputText value="#{courseBN.course.description}"/>
+
+                            <p:outputLabel value="Semesters"/>
+                            <h:selectOneMenu value="#{courseBN.course.semesterId}" converter="#{courseBN.semConv}">
+                                <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                                <f:selectItems value="#{courseBN.semList}"
+                                               var="sem" itemLabel="#{sem.semesterValue}"
+                                               itemValue="#{sem}"/>
+                            </h:selectOneMenu>
+
+                            <p:commandButton value="Save" action="#{courseBN.processCourse()}" class="primeButton" update=":inst-form"/>
+                        </p:panelGrid>
+                    </center>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

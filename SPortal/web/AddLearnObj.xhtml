@@ -1,0 +1,103 @@
+<ui:composition template="/resources/usersTemp.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="content">
+        <h:form id="inst-form" style=" position: absolute;
+                width: 70%;
+                height: 200px;
+                z-index: 15;
+                top: 30%;
+                left: 30%;
+                margin: -100px 0 0 -150px;
+                " enctype="multipart/form-data">
+
+            <p:breadCrumb>
+                <p:menuitem value="Menu" url="#" />
+                <p:menuitem value="Learning Objects" url="#" style="color: #5FCF80;font-size: 12px"/>
+                <p:menuitem value="Proccess Learning Objects" url="#" style="color: #5FCF80;font-size: 12px"/>
+            </p:breadCrumb>
+
+
+            <center>
+                <p:messages autoUpdate="true" style="width: 508px;"/>
+
+                <p:panelGrid columns="2" style="margin-top: 25px;">
+                    <p:outputLabel value="File Desc"/>
+                    <p:inputText value="#{learnObjBN.learnObj.fileDesc}"/>
+
+                    <p:outputLabel value="Learning Object Type"/>
+                    <h:selectOneMenu value="#{learnObjBN.learnObj.learningObjTyId}" converter="#{learnObjBN.learnObjTypCon}">
+                        <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                        <f:selectItems value="#{learnObjBN.learnObjTypeList}"
+                                       var="c" itemLabel="#{c.learningObjectType}"
+                                       itemValue="#{c}"/>
+                    </h:selectOneMenu>
+
+                    <p:outputLabel value="Course"/>
+                    <h:selectOneMenu value="#{learnObjBN.selectedCourse}" converter="#{learnObjBN.corCov}">
+                        <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                        <f:selectItems value="#{learnObjBN.coursesList}"
+                                       var="c" itemLabel="#{c.courseCode}/#{c.fullName}"
+                                       itemValue="#{c}"/>
+                        <p:ajax listener="#{learnObjBN.fillTopics()}" update="topi-menu"/>
+                    </h:selectOneMenu>
+
+                    <p:outputLabel value="Topic"/>
+                    <h:selectOneMenu value="#{learnObjBN.selectedTopic}" converter="#{learnObjBN.toConv}" id="topi-menu">
+                        <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                        <f:selectItems value="#{learnObjBN.topicList}"
+                                       var="c" itemLabel="#{c.topicName}"
+                                       itemValue="#{c}"/>
+                        <p:ajax listener="#{learnObjBN.fillLesson()}" update="lesson-menu"/>
+                    </h:selectOneMenu>
+
+                    <p:outputLabel value="Lesson"/>
+                    <h:selectOneMenu value="#{learnObjBN.selectedLesson}" converter="#{learnObjBN.lessonConv}" id="lesson-menu">
+                        <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                        <f:selectItems value="#{learnObjBN.lessonList}"
+                                       var="c" itemLabel="#{c.lessonName}"
+                                       itemValue="#{c}"/>
+                        <p:ajax listener="#{learnObjBN.fillFolder()}" update="folder-menu"/>
+                    </h:selectOneMenu>
+
+                    <p:outputLabel value="Folders"/>
+                    <h:selectOneMenu value="#{learnObjBN.learnObj.folderId}" converter="#{learnObjBN.foldConv}" id="folder-menu">
+                        <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                        <f:selectItems value="#{learnObjBN.folderList}"
+                                       var="c" itemLabel="#{c.folderName}"
+                                       itemValue="#{c}"/>
+                    </h:selectOneMenu>
+
+                    <p:outputLabel value="Text"/>
+                    <p:editor  value="#{learnObjBN.learnObj.text}" width="600" />
+
+                    <p:outputLabel value="Upload"/>
+                    <p:fileUpload value="#{learnObjBN.file}" mode="simple"/>
+
+
+                </p:panelGrid>
+
+                <p:outputLabel value="Criterias Percentages"/>
+                <p:panelGrid columns="2" style="width: 88%">
+
+                    <c:forEach items="#{learnObjBN.criteriaList}" var="c">
+                        <p:outputLabel value="#{c.criteria}"/>
+                        <p:inputText value="#{learnObjBN.percentageValue}" >
+                            <p:ajax event="change" listener="#{learnObjBN.sendValues(c)}" process="@this"/>
+                        </p:inputText>
+                    </c:forEach>
+                </p:panelGrid>
+
+                <br/>
+                <p:commandButton value="Save" actionListener="#{learnObjBN.processLearnObj()}" ajax="false"/>
+                <br/><br/>
+
+
+            </center>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>ULEARN</title>
+        <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com"/>
+        <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template"/>
+
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans"/>
+        <h:outputStylesheet library="css" name="font-awesome.min.css"  />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"  />
+        <h:outputStylesheet library="css" name="imagehover.min.css"  />
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+    <body style="background-color: rgb(247, 247, 247);" onbeforeunload="HandleBackFunctionality()">
+        <h:form prependId="false" id="main">
+            <!--Navigation bar-->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="index.xhtml">U<span>LEARN</span></a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <c:forEach items="#{main.rolePrivList}" var="men">
+                                <li><h:link value="#{men.pageId.pageDesc}" outcome="#{men.pageId.pageUrl}">
+                                        <f:param name="EId" value="#{men.pageId.id}" />
+                                        <f:param name="faces-redirect" value="true&amp;" />
+                                    </h:link>
+                                </li>
+                            </c:forEach>
+                            <li>
+                                <h:commandLink value="Sign out" action="#{main.signOut}"/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </h:form>
+        <!--/ Navigation bar-->
+
+        <h:form id="myCont" style="height:100xp">
+
+            <div style="width:180px;margin-top: 61px;float: left;border: 0px;border-radius: 0px;background-color: white;
+                 border-right: 1px solid #ccc;border-bottom: 1px solid #ccc;overflow: visible;height:80vh;">
+                <label> &nbsp; Topics </label>
+                <ul style="list-style-type: square;">
+                    <ui:repeat  id="topicsR" value="#{studBN.selectedCourse.topicList}" var="top">
+                        <li> <p:outputLabel value="Topic #{top.topicSequence}" ></p:outputLabel></li>
+                        <ul style="list-style-type: circle;">
+                            <ui:repeat id="lessonsR" value="#{top.lessonList}" var="les">
+                                <p:commandLink id="link" actionListener="#{studBN.getLearningOBj(les)}" value="Lesson #{les.sequence}" ajax="true"
+                                               update=":myCont:conty" style="margin-left: -20px"/>
+                                <br/>
+                            </ui:repeat>
+                        </ul>
+                    </ui:repeat>
+                </ul>
+            </div>
+
+            <h:panelGroup id="conty" style=" height: 100% " layout="block">
+                <ui:insert name="content"></ui:insert>
+            </h:panelGroup>
+        </h:form>
+
+
+
+        <ui:remove>
+            <!--            <p:slideMenu style="width:180px;margin-top: 61px;float: left;border: 0px;border-radius: 0px;
+                                     border-right: 1px solid #ccc;border-bottom: 1px solid #ccc;overflow: visible;height:80vh;" >
+                            <p:submenu label="Topics" icon="ui-icon-newwin">
+                                <c:forEach items="#{studBN.selectedCourse.topicList}" var="top">
+                                    <p:submenu label="Topic #{top.topicSequence}">
+                                        <c:forEach items="#{top.lessonList}" var="les">
+                                            <p:menuitem value="Lesson #{les.sequence}" actionListener="#{studBN.getLearningOBj(les)}"  update="conty"/>
+                                        </c:forEach>
+                                    </p:submenu>
+                                </c:forEach>
+                            </p:submenu>
+                        </p:slideMenu>--> 
+        </ui:remove>
+
+
+        <style>
+            .ui-slidemenu-backward{
+                padding: 0px !important;
+            }
+            .ui-slidemenu-wrapper,.ui-slidemenu-content{
+                height: 100% !important;
+            }
+            .ui-widget-content ui-menu-list ui-corner-all ui-helper-clearfix ui-menu-child ui-shadow{
+                width: 169.56px !important;
+            }
+        </style>
+
+    </body>
+</html>

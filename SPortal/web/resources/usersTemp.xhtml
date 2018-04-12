@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>ULEARN</title>
+        <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com"/>
+        <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template"/>
+
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans"/>
+        <h:outputStylesheet library="css" name="font-awesome.min.css"  />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"  />
+        <h:outputStylesheet library="css" name="imagehover.min.css"  />
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+    <body style="background-color: rgb(247, 247, 247);">
+        <h:form prependId="false" id="main">
+            <!--Navigation bar-->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="index.xhtml">U<span>LEARN</span></a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <c:forEach items="#{main.rolePrivList}" var="men">
+                                <li><h:link value="#{men.pageId.pageDesc}" outcome="#{men.pageId.pageUrl}">
+                                        <f:param name="EId" value="#{men.pageId.id}" />
+                                        <f:param name="faces-redirect" value="true&amp;" />
+                                    </h:link>
+                                </li>
+                            </c:forEach>
+                            <li>
+                                <h:commandLink value="Sign out" action="#{main.signOut}"/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </h:form>
+        <!--/ Navigation bar-->
+
+        <!--Modal box-->
+        <div class="modal fade" id="login" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <h:form>
+                    <!-- Modal content no 1-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                            <h4 class="modal-title text-center form-title">Login</h4>
+                        </div>
+                        <div class="modal-body padtrbl">
+
+                            <div class="login-box-body">
+                                <p class="login-box-msg">Sign in to start your session</p>
+                                <div class="form-group">
+                                    <div class="form-group has-feedback"> <!-- username-->
+                                        <input class="form-control" placeholder="Username"  id="loginid" type="text" autocomplete="off" /> 
+                                        <span style="display:none;font-weight:bold; position:absolute;color: red;position: absolute;padding:4px;font-size: 11px;background-color:rgba(128, 128, 128, 0.26);z-index: 17;  right: 27px; top: 5px;" id="span_loginid"></span><!---Alredy exists  ! -->
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                    </div>
+                                    <div class="form-group has-feedback"><!-- password -->
+                                        <input class="form-control" placeholder="Password" id="loginpsw" type="password" autocomplete="off" />
+                                        <span style="display:none;font-weight:bold; position:absolute;color: grey;position: absolute;padding:4px;font-size: 11px;background-color:rgba(128, 128, 128, 0.26);z-index: 17;  right: 27px; top: 5px;" id="span_loginpsw"></span><!---Alredy exists  ! -->
+                                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                    </div>
+                                    <p:commandLink value="Register" style="    line-height: 1.52;
+                                                   color: #717f86;
+                                                   font-size: 16px;" action="#{main.goToREg()}" ajax="false"/>
+                                    <br/>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <button type="button" class="btn btn-green btn-block btn-flat" onclick="userlogin()">Sign In</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+        <!--/ Modal box-->
+
+
+        <ui:insert name="content">
+
+        </ui:insert>
+
+
+
+
+    </body>
+</html>

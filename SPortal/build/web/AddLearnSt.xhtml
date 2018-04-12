@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="/resources/usersTemp.xhtml">
+            <ui:define name="content">
+                <h:form id="inst-form" style=" position: absolute;
+                        width: 70%;
+                        height: 200px;
+                        z-index: 15;
+                        top: 30%;
+                        left: 30%;
+                        margin: -100px 0 0 -150px;
+                        ">
+
+                    <p:breadCrumb>
+                        <p:menuitem value="Menu" url="#" />
+                        <p:menuitem value="Learning Stratigy" url="#" style="color: #5FCF80;font-size: 12px"/>
+                        <p:menuitem value="Proccess Learning Stratigy" url="#" style="color: #5FCF80;font-size: 12px"/>
+                    </p:breadCrumb>
+
+                    <p:messages autoUpdate="true" style="width: 508px;"/>
+
+                    <p:panelGrid columns="2" style="margin-top: 25px;margin-left: 3px;">
+                        <p:outputLabel value="Courses"/>
+                        <h:selectOneMenu value="#{learningStBN.ls.courseId}" converter="#{learningStBN.courseConv}">
+                            <f:selectItem itemValue="#{null}" itemLabel="--select--" noSelectionOption="true" />
+                            <f:selectItems value="#{learningStBN.courseList}"
+                                           var="com" itemLabel="#{com.courseCode}/#{com.fullName}"
+                                           itemValue="#{com}"/>
+                        </h:selectOneMenu>
+
+                        <p:outputLabel value="Stratigy Name"/>
+                        <p:inputText value="#{learningStBN.ls.stratigicName}"/>
+
+                        <p:outputLabel value="Style Name"/>
+                        <p:inputText value="#{learningStBN.learnStSt.stratigicStyleName}"/>
+
+                        <p:outputLabel value="Sequence"/>
+                        <p:inputText value="#{learningStBN.learnStSt.sequence}"/>
+
+                        <p:outputLabel value="Learning Object Type"/>
+                        <p:selectManyCheckbox id="grid" value="#{learningStBN.selectedObjectsTypeList}" layout="grid" columns="3" converter="#{learningStBN.learnObjTConv}">
+                            <f:selectItems value="#{learningStBN.objectsTypeList}" var="obj" itemLabel="#{obj.learningObjectType}" itemValue="#{obj}" />
+                        </p:selectManyCheckbox>
+
+                        <p:commandButton value="Add" update="result" action="#{learningStBN.addStyle()}"/>
+
+                    </p:panelGrid>
+
+                    <p:panel id="result">
+                        <h:dataTable value="#{learningStBN.styleList}" var="obj">
+                            <h:column>
+                                <f:facet name="header">Style Name</f:facet>
+                                <h:outputText value="#{obj.stratigicStyleName}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Sequence</f:facet>
+                                <h:outputText value="#{obj.sequence}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Learning Object</f:facet>
+                                <ul>
+                                    <ui:repeat value="#{obj.learningStratigyObjectList}" var="lo">
+                                        <li>
+                                            <h:outputText value="#{lo.learningObjectTypeId.learningObjectType}"/>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </h:column> 
+                            <h:column>
+                                <h:commandButton value="remove" action="#{learningStBN.removeStratigyStyle(obj)}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </p:panel>
+
+
+                    <p:commandButton value="Save" action="#{learningStBN.processLearnStratigy()}" class="primeButton" update=":inst-form"/>
+
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

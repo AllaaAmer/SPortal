@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="/resources/usersTemp.xhtml">
+            <ui:define name="content">
+                <h:form id="inst-form" style=" position: absolute;
+                        width: 70%;
+                        height: 200px;
+                        z-index: 15;
+                        top: 30%;
+                        left: 30%;
+                        margin: -100px 0 0 -150px;
+                        ">
+
+                    <p:breadCrumb>
+                        <p:menuitem value="Menu" url="#" />
+                        <p:menuitem value="Instructor" url="#" style="color: #5FCF80;font-size: 12px"/>
+                        <p:menuitem value="Proccess Instructor" url="#" style="color: #5FCF80;font-size: 12px"/>
+                    </p:breadCrumb>
+
+                    <p:messages autoUpdate="true" style="width: 508px;"/>
+
+                    <p:panelGrid columns="2" style="margin-top: 25px;margin-left: 3px;">
+                        <p:outputLabel value="Instructor Name"/>
+                        <p:inputText value="#{instBN.instructor.userId.name}"/>
+
+                        <p:outputLabel value="Instructor E-Mail"/>
+                        <p:inputText value="#{instBN.instructor.userId.email}"/>
+
+                        <p:outputLabel value="Instructor Country"/>
+                        <p:inputText value="#{instBN.instructor.userId.country}"/>
+
+                        <p:outputLabel value="Instructor Password"/>
+                        <p:password value="#{instBN.instructor.userId.password}" disabled="#{instBN.editFlag}"/>
+
+                        <p:outputLabel value="Courses"/>
+                        <h:selectManyCheckbox value="#{instBN.instructor.courseList}" converter="#{instBN.coConv}" layout="pageDirection">
+                            <f:selectItems value="#{instBN.coursesList}"
+                                           var="com" itemLabel="#{com.courseCode}/#{com.fullName}"
+                                           itemValue="#{com}"/>
+                        </h:selectManyCheckbox>
+
+                        <p:commandButton value="Save" action="#{instBN.processInst()}" class="primeButton" update=":inst-form"/>
+                    </p:panelGrid>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

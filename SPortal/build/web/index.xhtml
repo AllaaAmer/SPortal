@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>ULEARN</title>
+        <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com"/>
+        <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template"/>
+
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans"/>
+        <h:outputStylesheet library="css" name="font-awesome.min.css"  />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"  />
+        <h:outputStylesheet library="css" name="imagehover.min.css"  />
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+    <body>
+        <!--Navigation bar-->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.xhtml">U<span>LEARN</span></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#faculity-member">Our Members</a></li>
+                        <li class="btn-trial"><a href="#" data-target="#login" data-toggle="modal">Sign in</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--/ Navigation bar-->
+        <!--Modal box-->
+        <div class="modal fade" id="login" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <h:form id="log_form">
+                    <!-- Modal content no 1-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                            <h4 class="modal-title text-center form-title">Login</h4>
+                        </div>
+                        <div class="modal-body padtrbl">
+
+                            <div class="login-box-body">
+                                <p class="login-box-msg">Sign in to start your session</p>
+                                <h:panelGroup rendered="#{main.errorFlag}">
+                                    <h:outputText value="User Not Found" style="color: red;font-size: 15px" />
+                                    <br/>
+                                </h:panelGroup>
+                                <div class="form-group">
+                                    <div class="form-group has-feedback"> <!-- username-->
+                                        <p:inputText class="form-control" value="#{main.emial}" placeholder="Email"  id="loginid" type="text" autocomplete="off"/> 
+                                        <span style="display:none;font-weight:bold; position:absolute;color: red;position: absolute;padding:4px;font-size: 11px;background-color:rgba(128, 128, 128, 0.26);z-index: 17;  right: 27px; top: 5px;" id="span_loginid"></span><!---Alredy exists  ! -->
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                    </div>
+                                    <div class="form-group has-feedback"><!-- password -->
+                                        <p:inputText class="form-control" value="#{main.password}" placeholder="Password" id="loginpsw" type="password" autocomplete="off" />
+                                        <span style="display:none;font-weight:bold; position:absolute;color: grey;position: absolute;padding:4px;font-size: 11px;background-color:rgba(128, 128, 128, 0.26);z-index: 17;  right: 27px; top: 5px;" id="span_loginpsw"></span><!---Alredy exists  ! -->
+                                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                    </div>
+                                    <p:commandLink value="Register" style="    line-height: 1.52;
+                                                   color: #717f86;
+                                                   font-size: 16px;" action="#{main.goToREg()}" ajax="false"/>
+                                    <br/>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <p:commandLink value="Sign in" action="#{main.signIn()}" style="    background-color: #5fcf80;
+                                                           color: #fff;width: 100%;display: block;margin-bottom: 0;
+                                                           font-size: 14px;
+                                                           font-weight: 400;
+                                                           line-height: 1.42857143;
+                                                           text-align: center;
+                                                           white-space: nowrap;
+                                                           vertical-align: middle;
+                                                           user-select: none;
+                                                           background-image: none;
+                                                           border: 1px solid transparent;
+                                                           border-radius: 4px;touch-action: manipulation;
+                                                           cursor: pointer;padding: 8px" update="log_form"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+        <!--/ Modal box-->
+        <!--Banner-->
+        <div class="banner">
+            <div class="bg-color">
+                <div class="container">
+                    <div class="row">
+                        <div class="banner-text text-center">
+                            <div class="text-border">
+                                <h2 class="text-dec">Trust and Quality</h2>
+                            </div>
+                            <div class="intro-para text-center quote">
+                                <p class="big-text">Learning Today . . . Leading Tomorrow.</p>
+                            </div>
+                            <a href="#feature" class="mouse-hover"><div class="mouse"></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ Banner-->
+      
+        <!--/ feature-->
+        <!--Faculity member-->
+        <section id="faculity-member" class="section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="header-section text-center">
+                        <h2>Meet Our Faculty Member</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem nesciunt vitae,<br/> maiores, magni dolorum aliquam.</p>
+                        <hr class="bottom-line"/>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="pm-staff-profile-container" >
+                            <div class="pm-staff-profile-image-wrapper text-center">
+                                <div class="pm-staff-profile-image">
+                                    <h:graphicImage value="resources/img/mentor.jpg" class="img-thumbnail img-circle" />
+                                </div>   
+                            </div>                                
+                            <div class="pm-staff-profile-details text-center">  
+                                <p class="pm-staff-profile-name">Bryan Johnson</p>
+                                <p class="pm-staff-profile-title">Lead Software Engineer</p>
+
+                                <p class="pm-staff-profile-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat dui. In posuere metus et elit placerat tristique. Maecenas eu est in sem ullamcorper tincidunt. </p>
+                            </div>     
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="pm-staff-profile-container" >
+                            <div class="pm-staff-profile-image-wrapper text-center">
+                                <div class="pm-staff-profile-image">
+                                    <h:graphicImage value="resources/img/mentor.jpg" class="img-thumbnail img-circle" />
+                                </div>   
+                            </div>                                
+                            <div class="pm-staff-profile-details text-center">  
+                                <p class="pm-staff-profile-name">Bryan Johnson</p>
+                                <p class="pm-staff-profile-title">Lead Software Engineer</p>
+
+                                <p class="pm-staff-profile-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat dui. In posuere metus et elit placerat tristique. Maecenas eu est in sem ullamcorper tincidunt. </p>
+                            </div>     
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="pm-staff-profile-container" >
+                            <div class="pm-staff-profile-image-wrapper text-center">
+                                <div class="pm-staff-profile-image">
+                                    <h:graphicImage value="resources/img/mentor.jpg" class="img-thumbnail img-circle" />
+                                </div>   
+                            </div>                                
+                            <div class="pm-staff-profile-details text-center">  
+                                <p class="pm-staff-profile-name">Bryan Johnson</p>
+                                <p class="pm-staff-profile-title">Lead Software Engineer</p>
+
+                                <p class="pm-staff-profile-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et placerat dui. In posuere metus et elit placerat tristique. Maecenas eu est in sem ullamcorper tincidunt. </p>
+                            </div>     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+      
+
+        <h:outputScript library="js" name="jquery.min.js" />
+        <h:outputScript library="js" name="jquery.easing.min.js" />
+        <h:outputScript library="js" name="bootstrap.min.js" />
+        <h:outputScript library="js" name="custom.js" />
+        <h:outputScript library="js" name="custom.js" />
+    </body>
+</html>

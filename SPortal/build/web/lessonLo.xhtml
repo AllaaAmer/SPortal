@@ -1,0 +1,55 @@
+
+<ui:composition template="/resources/studentSubTemp.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="content">
+        <h:panelGroup id="inst-form" style=" position: absolute;
+                      width: 86%;
+                      height: 100%;
+                      z-index: 15;
+                      top: 16%;
+                      left: 25.2%;
+                      margin: -100px 0 0 -150px;
+                      " >
+            <p:breadCrumb style="margin-top:60px;width: 100%">
+                <p:menuitem value="Categories" url="#"/>
+                <p:menuitem value="Back" action="#{lessonLearnBN.addTrans}" style="font-size: 12px;"/>
+            </p:breadCrumb>
+
+            <p:media value="/PDFReader" player="pdf" style="width: 70%;height: 90vh" rendered="#{lessonLearnBN.pdfFlag}"/>
+
+            <p:media value="/VideoReader" player="windows" style="width: 70%;height: 90vh" rendered="#{lessonLearnBN.videoFlag}"/>
+
+            <h:panelGroup rendered="#{lessonLearnBN.textFlag}">
+                <iframe src="/SPortal/OfficeReader" style="width: 70%;height: 80vh" ></iframe>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{lessonLearnBN.audioFlag}">
+                <audio controls="controls"  style="width: 70%;height: 80vh" autoplay="true" >
+                    <source src="/SPortal/AudioReader" />
+                </audio>
+            </h:panelGroup>
+
+            <h:graphicImage value="/ImageReader" style="width: 70%;height: 90vh" rendered="#{lessonLearnBN.imageFlag}"/>
+            <script>
+                function HandleBackFunctionality()
+                {
+                    if (window.event) //Internet Explorer
+                    {
+                        document.getElementById("myCont:test").click();
+
+                    } else //Other browsers e.g. Chrome
+                    {
+                        document.getElementById("myCont:test").click();
+                    }
+                }
+            </script>
+
+            <h:commandButton action="#{lessonLearnBN.addTrans}"  style="display: none" id="test" class="brow-but"/>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
